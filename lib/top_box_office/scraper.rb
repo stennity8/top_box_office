@@ -1,0 +1,3 @@
+class TopBoxOffice::Scraper
+
+end

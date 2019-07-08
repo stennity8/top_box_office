@@ -1,0 +1,3 @@
+class TopBoxOffice::Movie
+
+end

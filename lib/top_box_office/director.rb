@@ -1,0 +1,3 @@
+class TopBoxOffice::Director
+
+end

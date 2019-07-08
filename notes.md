@@ -1,5 +1,7 @@
 Top Box Office CLI
 
+*TBD if Director and Director Info to be included as well
+
 CLI Flow Pattern
 1. Prompt the user with a welcome.
 2. Scrape the Top Box Office Movies from IMDB in Scraper Class
