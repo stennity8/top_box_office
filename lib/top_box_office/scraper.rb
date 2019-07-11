@@ -22,7 +22,7 @@ class TopBoxOffice::Scraper
     # Create Movie Objects for each Top Box Office Movie    
     TopBoxOffice::Movie.new(initial_info)
     end
-  end
+ end
 
 
   def self.scrape_movie(movie_url)
