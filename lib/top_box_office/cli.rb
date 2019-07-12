@@ -80,6 +80,16 @@ class TopBoxOffice::CLI
   end
 
   def additional_movie_info
+    puts "\n\n#{movie_choice.title} - #{movie_choice.tag_line}"
+    puts "\nStarring: #{movie_choice.stars[0]}, #{movie_choice.stars[1]}, and #{movie_choice.stars[2]}."
+    if movie_choice.director.length > 1
+      puts "Directed by #{movie_choice.director[0]} and co-directed by #{movie_choice.director[1]}."
+    else
+      puts "Directed by #{movie_choice.director[0]}."
+    end
+    puts "This #{movie_choice.genres[0]}/#{movie_choice.genres[1]}/#{movie_choice.genres[2]} is rated #{movie_choice.rated} and has a run time of #{movie_choice.length}."
+    puts "IMDB currently rates this movie at #{movie_choice.imdb_rating} based on #{movie_choice.review_number} reviews."
+    # binding.pry
   end
 
 end

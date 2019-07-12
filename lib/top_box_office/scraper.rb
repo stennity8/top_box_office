@@ -39,15 +39,15 @@ class TopBoxOffice::Scraper
        # alternate  length: title_block.css('div.subtext time').text.strip,
       rated: title_block_array[0],
       length: title_block_array[1],
-      genres: title_block_array[2] + " " + title_block_array[3] + " " + title_block_array[4],
+      #genres: title_block_array[2] + " " + title_block_array[3] + " " + title_block_array[4],
+      genres: [title_block_array[2].tr!(",", ""), title_block_array[3].tr!(",", ""), title_block_array[4]],
       release_date: title_block_array[5],
       imdb_rating: rating_block.css('div.ratingValue span').text,
       review_number: rating_block.css('span.small').text,
       tag_line: plot_block.css('div.summary_text').text.strip,
-      director: plot_block.css('div.credit_summary_item')[0].css("a").map{|a| a.text}.join(", "),
-      stars: plot_block.css('div.credit_summary_item')[2].css("a").map{|a| a.text}[0..2].join(", "),
+      director: plot_block.css('div.credit_summary_item')[0].css("a").map{|a| a.text},
+      stars: plot_block.css('div.credit_summary_item')[2].css("a").map{|a| a.text}[0..2]
     }
-    binding.pry
     movie_choice.more_info(movie_info)
   end
 
