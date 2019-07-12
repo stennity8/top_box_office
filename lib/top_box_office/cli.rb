@@ -89,7 +89,22 @@ class TopBoxOffice::CLI
     end
     puts "This #{movie_choice.genres[0]}/#{movie_choice.genres[1]}/#{movie_choice.genres[2]} is rated #{movie_choice.rated} and has a run time of #{movie_choice.length}."
     puts "IMDB currently rates this movie at #{movie_choice.imdb_rating} based on #{movie_choice.review_number} reviews."
-    # binding.pry
+    
+    continue?
+  end
+
+  def continue?
+    puts"\nWould you like to return to the Top Box Office List and explore other movies? (Y/N)"
+    user_input = gets.strip.downcase
+    if ["y", "yes"].include?(user_input)
+      box_office_list
+    elsif ["n", "no", "exit"].include?(user_input)
+      puts "Thanks for stopping by!"
+    else
+       puts "We're sorry but we didn't understand you."
+       continue?
+    end
+
   end
 
 end
