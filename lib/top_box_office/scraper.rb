@@ -44,8 +44,8 @@ class TopBoxOffice::Scraper
       imdb_rating: rating_block.css('div.ratingValue span').text,
       review_number: rating_block.css('span.small').text,
       tag_line: plot_block.css('div.summary_text').text.strip,
-      director: plot_block.css('div.credit_summary_item')[0].css("a").map{|a| a.text},
-      stars: plot_block.css('div.credit_summary_item')[2].css("a").map{|a| a.text}[0..2],
+      director: plot_block.css('div.credit_summary_item')[0].css("a").map{|a| a.text}.join(", "),
+      stars: plot_block.css('div.credit_summary_item')[2].css("a").map{|a| a.text}[0..2].join(", "),
     }
     binding.pry
     movie_choice.more_info(movie_info)
