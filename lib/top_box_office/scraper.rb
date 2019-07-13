@@ -36,10 +36,8 @@ class TopBoxOffice::Scraper
 
 
     movie_info = {
-       # alternate  length: title_block.css('div.subtext time').text.strip,
       rated: title_block_array[0],
       length: title_block_array[1],
-      #genres: title_block_array[2] + " " + title_block_array[3] + " " + title_block_array[4],
       genres: [title_block_array[2].tr!(",", ""), title_block_array[3].tr!(",", ""), title_block_array[4]],
       release_date: title_block_array[5],
       imdb_rating: rating_block.css('div.ratingValue span').text,

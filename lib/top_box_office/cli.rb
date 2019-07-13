@@ -94,6 +94,7 @@ class TopBoxOffice::CLI
   end
 
   def continue?
+    # Allows user to quit or continue after viewing detailed movie info
     puts"\nWould you like to return to the Top Box Office List and explore other movies? (Y/N)"
     user_input = gets.strip.downcase
     if ["y", "yes"].include?(user_input)
@@ -104,7 +105,6 @@ class TopBoxOffice::CLI
        puts "We're sorry but we didn't understand you."
        continue?
     end
-
   end
 
 end
