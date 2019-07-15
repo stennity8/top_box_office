@@ -1,7 +1,9 @@
 class TopBoxOffice::CLI
-  attr_accessor :movie_choice
+  attr_accessor :movie_choice, :count
 
   def call
+    @count = 0
+
     TopBoxOffice::Scraper.scrape_imdb
     bo_image
     puts "\nWelcome to Top Box Office!\n\n"
@@ -42,24 +44,24 @@ class TopBoxOffice::CLI
       title = movie.title
       puts "#{index}. #{title}"
     end
-
-    # Get user input for box office data
-    puts "\nWhich number on the list would you like to see the earnings for?"
-    user_input = gets.strip
-    # Check if user requested to exit
-    if user_input.downcase == "exit" 
-      puts "Thanks for stopping by!" 
-      exit
-    else 
-      user_input = user_input.to_i
-    end
-    # Validate users input is number on list
-    if user_input > 0 && user_input <= TopBoxOffice::Movie.all.length
-      print_earnings(user_input)
-    else
-      puts "\nWe're sorry but that is not a valid choice."
-      box_office_list
-    end
+    user_input_and_validation
+    # # Get user input for box office data
+    # puts "\nWhich number on the list would you like to see the earnings for?"
+    # user_input = gets.strip
+    # # Check if user requested to exit
+    # if user_input.downcase == "exit" 
+    #   puts "Thanks for stopping by!" 
+    #   exit
+    # else 
+    #   user_input = user_input.to_i
+    # end
+    # # Validate users input is number on list
+    # if user_input > 0 && user_input <= TopBoxOffice::Movie.all.length
+    #   print_earnings(user_input)
+    # else
+    #   puts "\nWe're sorry but that is not a valid choice."
+    #   box_office_list
+    # end
   end
 
   # Method to show user the selected movie's earnings.
@@ -123,10 +125,31 @@ class TopBoxOffice::CLI
     end
   end
 
-  # def user_input_validation(user_input)
-  #   puts "\nWhich number on the list would you like to see the earnings for?"
-  #   user_input = gets.strip.to_i
-
-  # end
-
+  def user_input_and_validation 
+    # count variable to allow invalid input 3 times before reprinting list.
+    # @count is used to allow for this function to utilize recursion.
+    
+    # Get user input for box office data
+    puts "\nWhich number on the list would you like to see the earnings for?"
+    user_input = gets.strip
+    # Check if user requested to exit
+    if user_input.downcase == "exit" 
+      puts "Thanks for stopping by!" 
+      exit
+    else 
+      user_input = user_input.to_i
+    end
+    # Validate users input is number on list
+    if user_input > 0 && user_input <= TopBoxOffice::Movie.all.length
+      print_earnings(user_input)
+    elsif @count < 3
+      puts "\nWe're sorry but that is not a valid choice."
+      @count += 1
+      user_input_and_validation
+    else
+      @count = 0
+      puts "\nWe're sorry but that is not a valid choice."
+      box_office_list
+    end
+  end
 end
