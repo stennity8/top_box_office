@@ -45,10 +45,21 @@ class TopBoxOffice::CLI
 
     # Get user input for box office data
     puts "\nWhich number on the list would you like to see the earnings for?"
-    user_input = gets.strip.to_i
-
-    # Call method to show earnings for selected movie
-    print_earnings(user_input)
+    user_input = gets.strip
+    # Check if user requested to exit
+    if user_input.downcase == "exit" 
+      puts "Thanks for stopping by!" 
+      exit
+    else 
+      user_input = user_input.to_i
+    end
+    # Validate users input is number on list
+    if user_input > 0 && user_input <= TopBoxOffice::Movie.all.length
+      print_earnings(user_input)
+    else
+      puts "\nWe're sorry but that is not a valid choice."
+      box_office_list
+    end
   end
 
   # Method to show user the selected movie's earnings.
@@ -111,5 +122,11 @@ class TopBoxOffice::CLI
        continue?
     end
   end
+
+  # def user_input_validation(user_input)
+  #   puts "\nWhich number on the list would you like to see the earnings for?"
+  #   user_input = gets.strip.to_i
+
+  # end
 
 end
