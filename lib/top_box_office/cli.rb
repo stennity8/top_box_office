@@ -47,10 +47,11 @@ class TopBoxOffice::CLI
     puts "\nWhich number on the list would you like to see the earnings for?"
     user_input = gets.strip.to_i
 
-    # Show earning for selected movie
+    # Call method to show earnings for selected movie
     print_earnings(user_input)
   end
 
+  # Method to show user the selected movie's earnings.
   def print_earnings(user_input)
     index = user_input.to_i - 1
     @movie_choice = TopBoxOffice::Movie.all[index]
@@ -66,9 +67,13 @@ class TopBoxOffice::CLI
     puts "\nWould you like to see additional information on this movie? (Y/N/EXIT)"
     user_input = gets.strip.downcase
     if ["y", "yes"].include?(user_input)
-      # Scrape additional movie info and call output function to display information
-      TopBoxOffice::Scraper.scrape_movie(@movie_choice)
+      # Scrape additional movie info and call output function to display information.  First check that additional movie has not already been scraped.
+      if @movie_choice.secondary_scrape == false
+        TopBoxOffice::Scraper.scrape_movie(@movie_choice)
+        additional_movie_info
+      else      
       additional_movie_info
+      end
     elsif ["n", "no"].include?(user_input)
       box_office_list
     elsif user_input == "exit"
@@ -95,7 +100,7 @@ class TopBoxOffice::CLI
 
   def continue?
     # Allows user to quit or continue after viewing detailed movie info
-    puts"\nWould you like to return to the Top Box Office List and explore other movies? (Y/N)"
+    puts"\nWould you like to return to the Top Box Office List and explore other movies? (Y/N/EXIT)"
     user_input = gets.strip.downcase
     if ["y", "yes"].include?(user_input)
       box_office_list

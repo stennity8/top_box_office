@@ -22,7 +22,7 @@ Or install it yourself as:
 
 Type the below and follow the on screen prompts after installing the gem.
 
-$ top-box-office
+$ bin/top-box-office
 
 ## Contributing
 
