@@ -7,6 +7,7 @@ require_relative "./environment.rb"
 require 'nokogiri'
 require 'pry'
 require 'open-uri'
+require 'colorize'
 
 # add usefull classes to this file(below) some ex.'s would be CLI class, Box Office Class, 
 #Movie class, etc.

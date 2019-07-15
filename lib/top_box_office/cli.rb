@@ -6,7 +6,7 @@ class TopBoxOffice::CLI
 
     TopBoxOffice::Scraper.scrape_imdb
     bo_image
-    puts "\nWelcome to Top Box Office!\n\n"
+    puts "\n             Welcome to Top Box Office!\n".colorize(:color => :yellow).blink
     
     # After scraper class runs and puts all movies into Movie Class(s) display 
     # list and request user input
@@ -35,14 +35,14 @@ class TopBoxOffice::CLI
   def box_office_list
     location = TopBoxOffice::Movie.all[0].location.split(" ").last[1,2]
     heading_date = TopBoxOffice::Movie.all[0].date
-
+    # binding.pry
     # Display Box Office Location and Date
-    puts "\nThe Top Movies in the #{location} Box Office as of the #{heading_date} are:\n\n"
+    puts "\nThe Top Movies in the #{location} Box Office as of the #{heading_date} are:\n".bold
 
     # List all Top Box Office Movies that were scraped
     TopBoxOffice::Movie.all.each.with_index(1) do |movie, index|
       title = movie.title
-      puts "#{index}. #{title}"
+      puts "#{index}. #{title}".bold
     end
     user_input_and_validation
   end
@@ -52,8 +52,8 @@ class TopBoxOffice::CLI
     index = user_input.to_i - 1
     @movie_choice = TopBoxOffice::Movie.all[index]
 
-    puts "\n#{@movie_choice.title} earned #{@movie_choice.weekend} the #{@movie_choice.date}."
-    puts "#{@movie_choice.title} has grossed #{@movie_choice.gross} over #{@movie_choice.weeks} week(s)."
+    puts "\n#{@movie_choice.title} earned #{@movie_choice.weekend} the #{@movie_choice.date}.".bold
+    puts "#{@movie_choice.title} has grossed #{@movie_choice.gross} over #{@movie_choice.weeks} week(s).".bold
     
     more_info?
   end
@@ -73,23 +73,23 @@ class TopBoxOffice::CLI
     elsif ["n", "no"].include?(user_input)
       box_office_list
     elsif user_input == "exit"
-      puts "Thanks for stopping by!"
+      puts "\nThanks for stopping by!\n".colorize(:color => :green)
     else
-       puts "We're sorry but we didn't understand you."
+       puts "We're sorry but we didn't understand you.".colorize(:color => :white, :background => :red)
        more_info?
     end
   end
 
   def additional_movie_info
-    puts "\n\n#{movie_choice.title} - #{movie_choice.tag_line}"
-    puts "\nStarring: #{movie_choice.stars[0]}, #{movie_choice.stars[1]}, and #{movie_choice.stars[2]}."
+    puts "\n\n#{movie_choice.title} - #{movie_choice.tag_line}".bold
+    puts "\nStarring: #{movie_choice.stars[0]}, #{movie_choice.stars[1]}, and #{movie_choice.stars[2]}.".bold
     if movie_choice.director.length > 1
-      puts "Directed by #{movie_choice.director[0]} and co-directed by #{movie_choice.director[1]}."
+      puts "Directed by #{movie_choice.director[0]} and co-directed by #{movie_choice.director[1]}.".bold
     else
-      puts "Directed by #{movie_choice.director[0]}."
+      puts "Directed by #{movie_choice.director[0]}.".bold
     end
-    puts "This #{movie_choice.genres[0]}/#{movie_choice.genres[1]}/#{movie_choice.genres[2]} is rated #{movie_choice.rated} and has a run time of #{movie_choice.length}."
-    puts "IMDB currently rates this movie at #{movie_choice.imdb_rating} based on #{movie_choice.review_number} reviews."
+    puts "This #{movie_choice.genres[0]}/#{movie_choice.genres[1]}/#{movie_choice.genres[2]} is rated #{movie_choice.rated} and has a run time of #{movie_choice.length}.".bold
+    puts "IMDB currently rates this movie at #{movie_choice.imdb_rating} based on #{movie_choice.review_number} reviews.".bold
     
     continue?
   end
@@ -101,9 +101,9 @@ class TopBoxOffice::CLI
     if ["y", "yes"].include?(user_input)
       box_office_list
     elsif ["n", "no", "exit"].include?(user_input)
-      puts "Thanks for stopping by!"
+      puts "\nThanks for stopping by!\n".colorize(:color => :green)
     else
-       puts "We're sorry but we didn't understand you."
+       puts "We're sorry but we didn't understand you.".colorize(:color => :white, :background => :red)
        continue?
     end
   end
@@ -117,7 +117,7 @@ class TopBoxOffice::CLI
     user_input = gets.strip
     # Check if user requested to exit
     if user_input.downcase == "exit" 
-      puts "Thanks for stopping by!" 
+      puts "\nThanks for stopping by!\n".colorize(:color => :green) 
       exit
     else 
       user_input = user_input.to_i
@@ -126,12 +126,12 @@ class TopBoxOffice::CLI
     if user_input > 0 && user_input <= TopBoxOffice::Movie.all.length
       print_earnings(user_input)
     elsif @count < 3
-      puts "\nWe're sorry but that is not a valid choice."
+      puts "\nWe're sorry but that is not a valid choice.".colorize(:color => :white, :background => :red)
       @count += 1
       user_input_and_validation
     else
       @count = 0
-      puts "\nWe're sorry but that is not a valid choice."
+      puts "\nWe're sorry but that is not a valid choice.".colorize(:color => :white, :background => :red)
       box_office_list
     end
   end
