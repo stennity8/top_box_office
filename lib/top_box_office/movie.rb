@@ -1,6 +1,6 @@
 class TopBoxOffice::Movie
   attr_accessor :location, :date, :title, :weekend, :gross, :weeks, :url, :rated, :length, :genres, 
-                :imdb_rating, :review_number, :tag_line, :director, :stars, :secondary_scrape 
+                :release_date, :imdb_rating, :review_number, :tag_line, :director, :stars, :secondary_scrape 
 
   @@all = []
 

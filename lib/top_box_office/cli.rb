@@ -42,7 +42,7 @@ class TopBoxOffice::CLI
       title = movie.title
       puts "#{index}. #{title}".bold
     end
-    
+
     user_input_and_validation
   end
 
@@ -74,14 +74,15 @@ class TopBoxOffice::CLI
     elsif user_input == "exit"
       puts "\nThanks for stopping by!\n".colorize(:color => :green)
     else
-       puts "\nWe're sorry but we didn't understand you.".colorize(:color => :white, :background => :red)
+       puts "\nWe're sorry but that is not a valid choice.".colorize(:color => :white, :background => :red)
        more_info?
     end
   end
 
   def additional_movie_info
     puts "\n\n#{movie_choice.title} - #{movie_choice.tag_line}".bold
-    puts "\nStarring: #{movie_choice.stars[0]}, #{movie_choice.stars[1]}, and #{movie_choice.stars[2]}.".bold
+    puts "\nIn theaters starting #{movie_choice.release_date}.".bold
+    puts "Starring: #{movie_choice.stars[0]}, #{movie_choice.stars[1]}, and #{movie_choice.stars[2]}.".bold
     if movie_choice.director.length > 1
       puts "Directed by #{movie_choice.director[0]} and co-directed by #{movie_choice.director[1]}.".bold
     else
@@ -102,7 +103,7 @@ class TopBoxOffice::CLI
     elsif ["n", "no", "exit"].include?(user_input)
       puts "\nThanks for stopping by!\n".colorize(:color => :green)
     else
-       puts "\nWe're sorry but we didn't understand you.".colorize(:color => :white, :background => :red)
+       puts "\nWe're sorry but that is not a valid choice.".colorize(:color => :white, :background => :red)
        continue?
     end
   end
@@ -123,6 +124,7 @@ class TopBoxOffice::CLI
     end
     # Validate users input is number on list
     if user_input > 0 && user_input <= TopBoxOffice::Movie.all.length
+      @count = 0
       print_earnings(user_input)
     elsif @count < 3
       puts "\nWe're sorry but that is not a valid choice.".colorize(:color => :white, :background => :red)
