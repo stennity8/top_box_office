@@ -3,17 +3,14 @@ class TopBoxOffice::CLI
 
   def call
     @count = 0
-
-    TopBoxOffice::Scraper.scrape_imdb
-    bo_image
-    puts "\n             Welcome to Top Box Office!\n".colorize(:color => :yellow).blink
-    
-    # After scraper class runs and puts all movies into Movie Class(s) display 
-    # list and request user input
+    bo_image_and_scrape
     box_office_list
   end
 
-  def bo_image
+  def bo_image_and_scrape
+    # This method performs initial scrape of information to be displayed and displays welcome message.
+    TopBoxOffice::Scraper.scrape_imdb
+
     puts ""
     puts "               @-_________________-@"
     puts "         @-_____|   NOW SHOWING   |_____-@"
@@ -29,7 +26,8 @@ class TopBoxOffice::CLI
     puts "  | -     |    |  |     --       |  |    |         |"
     puts "  |    -  |    |- | -      -     |  |    | --      |"
     puts "  |_______|====|__|______________|__|====|_________|"
-        
+
+    puts "\n             Welcome to Top Box Office!\n".colorize(:color => :yellow).blink        
   end
 
   def box_office_list
@@ -75,7 +73,7 @@ class TopBoxOffice::CLI
     elsif user_input == "exit"
       puts "\nThanks for stopping by!\n".colorize(:color => :green)
     else
-       puts "We're sorry but we didn't understand you.".colorize(:color => :white, :background => :red)
+       puts "\nWe're sorry but we didn't understand you.".colorize(:color => :white, :background => :red)
        more_info?
     end
   end
@@ -103,7 +101,7 @@ class TopBoxOffice::CLI
     elsif ["n", "no", "exit"].include?(user_input)
       puts "\nThanks for stopping by!\n".colorize(:color => :green)
     else
-       puts "We're sorry but we didn't understand you.".colorize(:color => :white, :background => :red)
+       puts "\nWe're sorry but we didn't understand you.".colorize(:color => :white, :background => :red)
        continue?
     end
   end
