@@ -33,7 +33,7 @@ class TopBoxOffice::CLI
   def box_office_list
     location = TopBoxOffice::Movie.all[0].location.split(" ").last[1,2]
     heading_date = TopBoxOffice::Movie.all[0].date
-    # binding.pry
+
     # Display Box Office Location and Date
     puts "\nThe Top Movies in the #{location} Box Office as of the #{heading_date} are:\n".bold
 
@@ -42,6 +42,7 @@ class TopBoxOffice::CLI
       title = movie.title
       puts "#{index}. #{title}".bold
     end
+    
     user_input_and_validation
   end
 
@@ -66,7 +67,7 @@ class TopBoxOffice::CLI
         TopBoxOffice::Scraper.scrape_movie(@movie_choice)
         additional_movie_info
       else      
-      additional_movie_info
+        additional_movie_info
       end
     elsif ["n", "no"].include?(user_input)
       box_office_list
