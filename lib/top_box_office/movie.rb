@@ -39,7 +39,7 @@ class TopBoxOffice::Movie
     puts "IMDB currently rates this movie at #{self.imdb_rating} based on #{self.review_number} reviews.".bold
   end
 
-    # Method to movie's earnings.
+    # Method to print movie's earnings.
     def print_earnings#(user_input)
       puts "\n#{self.title} earned #{self.weekend} the #{self.date}.".bold
       puts "#{self.title} has grossed #{self.gross} over #{self.weeks} week(s).".bold
