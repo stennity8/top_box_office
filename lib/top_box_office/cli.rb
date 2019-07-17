@@ -45,44 +45,6 @@ class TopBoxOffice::CLI
     user_input_and_validation   
   end
 
-  def more_info?
-    # Prompt user for navigation
-    puts "\nWould you like to see additional information on this movie? (Y/N/EXIT)"
-    user_input = gets.strip.downcase
-    if ["y", "yes"].include?(user_input)
-      # Scrape additional movie info and call output function to display information.  First check that additional movie has not already been scraped.
-      if @movie_choice.secondary_scrape == false
-        TopBoxOffice::Scraper.scrape_movie(@movie_choice)
-        @movie_choice.print_additional_movie_info
-        continue?
-      end
-        @movie_choice.print_additional_movie_info
-        continue?
-    elsif ["n", "no"].include?(user_input)
-      box_office_list
-    elsif user_input == "exit"
-      puts "\nThanks for stopping by!\n".colorize(:color => :green)
-    else
-       puts "\nWe're sorry but that is not a valid choice.".colorize(:color => :white, :background => :red)
-       more_info?
-    end
-  end
-
-  def continue?
-    # Allows user to quit or continue after viewing detailed movie info
-    puts"\nWould you like to return to the Top Box Office List and explore other movies? (Y/N/EXIT)"
-    user_input = gets.strip.downcase
-    if ["y", "yes"].include?(user_input)
-      box_office_list
-    elsif ["n", "no", "exit"].include?(user_input)
-      puts "\nThanks for stopping by!\n".colorize(:color => :green)
-      exit
-    else
-       puts "\nWe're sorry but that is not a valid choice.".colorize(:color => :white, :background => :red)
-       continue?
-    end
-  end
-
   def user_input_and_validation 
     # count variable to allow invalid input 3 times before reprinting list.
     # @count is used to allow for this function to utilize recursion.
@@ -113,6 +75,45 @@ class TopBoxOffice::CLI
       @count = 0
       puts "\nWe're sorry but that is not a valid choice.".colorize(:color => :white, :background => :red)
       box_office_list
+    end
+  end
+
+  def more_info?
+    # Prompt user for navigation
+    puts "\nWould you like to see additional information on this movie? (Y/N/EXIT)"
+    user_input = gets.strip.downcase
+    if ["y", "yes"].include?(user_input)
+      # Scrape additional movie info and call output function to display information.  
+      # First check that additional movie has not already been scraped.
+      if @movie_choice.secondary_scrape == false
+        TopBoxOffice::Scraper.scrape_movie(@movie_choice)
+        @movie_choice.print_additional_movie_info
+        continue?
+      end
+        @movie_choice.print_additional_movie_info
+        continue?
+    elsif ["n", "no"].include?(user_input)
+      box_office_list
+    elsif user_input == "exit"
+      puts "\nThanks for stopping by!\n".colorize(:color => :green)
+    else
+       puts "\nWe're sorry but that is not a valid choice.".colorize(:color => :white, :background => :red)
+       more_info?
+    end
+  end
+
+  def continue?
+    # Allows user to quit or continue after viewing detailed movie info
+    puts"\nWould you like to return to the Top Box Office List and explore other movies? (Y/N/EXIT)"
+    user_input = gets.strip.downcase
+    if ["y", "yes"].include?(user_input)
+      box_office_list
+    elsif ["n", "no", "exit"].include?(user_input)
+      puts "\nThanks for stopping by!\n".colorize(:color => :green)
+      exit
+    else
+      puts "\nWe're sorry but that is not a valid choice.".colorize(:color => :white, :background => :red)
+      continue?
     end
   end
 end
