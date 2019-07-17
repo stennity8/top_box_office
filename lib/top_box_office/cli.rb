@@ -66,9 +66,11 @@ class TopBoxOffice::CLI
       if @movie_choice.secondary_scrape == false
         TopBoxOffice::Scraper.scrape_movie(@movie_choice)
         additional_movie_info
-      else      
-        additional_movie_info
       end
+        additional_movie_info
+      # else      
+      #   additional_movie_info
+      # end
     elsif ["n", "no"].include?(user_input)
       box_office_list
     elsif user_input == "exit"
@@ -102,6 +104,7 @@ class TopBoxOffice::CLI
       box_office_list
     elsif ["n", "no", "exit"].include?(user_input)
       puts "\nThanks for stopping by!\n".colorize(:color => :green)
+      exit
     else
        puts "\nWe're sorry but that is not a valid choice.".colorize(:color => :white, :background => :red)
        continue?
