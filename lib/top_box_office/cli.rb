@@ -41,20 +41,8 @@ class TopBoxOffice::CLI
     TopBoxOffice::Movie.all.each.with_index(1) do |movie, index|
       title = movie.title
       puts "#{index}. #{title}".bold
-    end
-
-    user_input_and_validation
-  end
-
-  # Method to show user the selected movie's earnings.
-  def print_earnings(user_input)
-    index = user_input.to_i - 1
-    @movie_choice = TopBoxOffice::Movie.all[index]
-
-    puts "\n#{@movie_choice.title} earned #{@movie_choice.weekend} the #{@movie_choice.date}.".bold
-    puts "#{@movie_choice.title} has grossed #{@movie_choice.gross} over #{@movie_choice.weeks} week(s).".bold
-    
-    more_info?
+    end 
+    user_input_and_validation   
   end
 
   def more_info?
@@ -65,12 +53,11 @@ class TopBoxOffice::CLI
       # Scrape additional movie info and call output function to display information.  First check that additional movie has not already been scraped.
       if @movie_choice.secondary_scrape == false
         TopBoxOffice::Scraper.scrape_movie(@movie_choice)
-        additional_movie_info
+        @movie_choice.print_additional_movie_info
+        continue?
       end
-        additional_movie_info
-      # else      
-      #   additional_movie_info
-      # end
+        @movie_choice.print_additional_movie_info
+        continue?
     elsif ["n", "no"].include?(user_input)
       box_office_list
     elsif user_input == "exit"
@@ -79,21 +66,6 @@ class TopBoxOffice::CLI
        puts "\nWe're sorry but that is not a valid choice.".colorize(:color => :white, :background => :red)
        more_info?
     end
-  end
-
-  def additional_movie_info
-    puts "\n\n#{movie_choice.title} - #{movie_choice.tag_line}".bold
-    puts "\nIn theaters starting #{movie_choice.release_date}.".bold
-    puts "Starring: #{movie_choice.stars[0]}, #{movie_choice.stars[1]}, and #{movie_choice.stars[2]}.".bold
-    if movie_choice.director.length > 1
-      puts "Directed by #{movie_choice.director[0]} and co-directed by #{movie_choice.director[1]}.".bold
-    else
-      puts "Directed by #{movie_choice.director[0]}.".bold
-    end
-    puts "This #{movie_choice.genres[0]}/#{movie_choice.genres[1]}/#{movie_choice.genres[2]} is rated #{movie_choice.rated} and has a run time of #{movie_choice.length}.".bold
-    puts "IMDB currently rates this movie at #{movie_choice.imdb_rating} based on #{movie_choice.review_number} reviews.".bold
-    
-    continue?
   end
 
   def continue?
@@ -125,10 +97,14 @@ class TopBoxOffice::CLI
     else 
       user_input = user_input.to_i
     end
+
     # Validate users input is number on list
     if user_input > 0 && user_input <= TopBoxOffice::Movie.all.length
       @count = 0
-      print_earnings(user_input)
+      index = user_input.to_i - 1
+      @movie_choice = TopBoxOffice::Movie.all[index]
+      @movie_choice.print_earnings
+      more_info?
     elsif @count < 3
       puts "\nWe're sorry but that is not a valid choice.".colorize(:color => :white, :background => :red)
       @count += 1
