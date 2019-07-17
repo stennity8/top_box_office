@@ -45,20 +45,28 @@ class TopBoxOffice::CLI
     user_input_and_validation   
   end
 
+  # Prompt message and check if user input 'exit'
+  def prompt_and_handle_exit(message)
+    puts message
+    user_input = gets.strip
+    
+    if user_input.downcase == "exit" 
+      puts "\nThanks for stopping by!\n".colorize(:color => :green) 
+      exit
+    end     
+    user_input
+  end
+
+  def not_valid_message
+    puts "\nWe're sorry but that is not a valid choice.".colorize(:color => :white, :background => :red)
+  end
+
   def user_input_and_validation 
     # count variable to allow invalid input 3 times before reprinting list.
     # @count is used to allow for this function to utilize recursion.
 
     # Get user input for box office data
-    puts "\nWhich number on the list would you like to see the earnings for?"
-    user_input = gets.strip
-    # Check if user requested to exit
-    if user_input.downcase == "exit" 
-      puts "\nThanks for stopping by!\n".colorize(:color => :green) 
-      exit
-    else 
-      user_input = user_input.to_i
-    end
+    user_input = prompt_and_handle_exit("\nWhich number on the list would you like to see the earnings for?").to_i
 
     # Validate users input is number on list
     if user_input > 0 && user_input <= TopBoxOffice::Movie.all.length
@@ -68,20 +76,20 @@ class TopBoxOffice::CLI
       @movie_choice.print_earnings
       more_info?
     elsif @count < 3
-      puts "\nWe're sorry but that is not a valid choice.".colorize(:color => :white, :background => :red)
+      not_valid_message
       @count += 1
       user_input_and_validation
     else
       @count = 0
-      puts "\nWe're sorry but that is not a valid choice.".colorize(:color => :white, :background => :red)
+      not_valid_message
       box_office_list
     end
   end
 
   def more_info?
     # Prompt user for navigation
-    puts "\nWould you like to see additional information on this movie? (Y/N/EXIT)"
-    user_input = gets.strip.downcase
+    user_input = prompt_and_handle_exit("\nWould you like to see additional information on this movie? (Y/N/EXIT)")
+    
     if ["y", "yes"].include?(user_input)
       # Scrape additional movie info and call output function to display information.  
       # First check that additional movie has not already been scraped.
@@ -94,11 +102,9 @@ class TopBoxOffice::CLI
         continue?
     elsif ["n", "no"].include?(user_input)
       box_office_list
-    elsif user_input == "exit"
-      puts "\nThanks for stopping by!\n".colorize(:color => :green)
     else
-       puts "\nWe're sorry but that is not a valid choice.".colorize(:color => :white, :background => :red)
-       more_info?
+      not_valid_message
+      more_info?
     end
   end
 
@@ -112,7 +118,7 @@ class TopBoxOffice::CLI
       puts "\nThanks for stopping by!\n".colorize(:color => :green)
       exit
     else
-      puts "\nWe're sorry but that is not a valid choice.".colorize(:color => :white, :background => :red)
+      not_valid_message
       continue?
     end
   end
