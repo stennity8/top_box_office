@@ -2,7 +2,7 @@ require_relative "top_box_office/version.rb"
 require_relative "top_box_office/cli.rb"
 require_relative "top_box_office/scraper.rb"
 require_relative "top_box_office/movie.rb"
-require_relative "./environment.rb"
+# require_relative "./environment.rb"
 
 require 'nokogiri'
 require 'pry'

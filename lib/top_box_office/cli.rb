@@ -45,22 +45,6 @@ class TopBoxOffice::CLI
     user_input_and_validation   
   end
 
-  # Prompt message and check if user input 'exit'
-  def prompt_and_handle_exit(message)
-    puts message
-    user_input = gets.strip
-    
-    if user_input.downcase == "exit" 
-      puts "\nThanks for stopping by!\n".colorize(:color => :green) 
-      exit
-    end     
-    user_input
-  end
-
-  def not_valid_message
-    puts "\nWe're sorry but that is not a valid choice.".colorize(:color => :white, :background => :red)
-  end
-
   def user_input_and_validation 
     # count variable to allow invalid input 3 times before reprinting list.
     # @count is used to allow for this function to utilize recursion.
@@ -86,9 +70,25 @@ class TopBoxOffice::CLI
     end
   end
 
+  # Prompt message and check if user input 'exit'
+  def prompt_and_handle_exit(message)
+    puts message
+    user_input = gets.strip
+    
+    if user_input.downcase == "exit" 
+      puts "\nThanks for stopping by!\n".colorize(:color => :green) 
+      exit
+    end     
+    user_input
+  end
+
+  def not_valid_message
+    puts "\nWe're sorry but that is not a valid choice.".colorize(:color => :white, :background => :red)
+  end
+
   def more_info?
     # Prompt user for navigation
-    user_input = prompt_and_handle_exit("\nWould you like to see additional information on this movie? (Y/N/EXIT)")
+    user_input = prompt_and_handle_exit("\nWould you like to see additional information on this movie? (Y/N/EXIT)").downcase
     
     if ["y", "yes"].include?(user_input)
       # Scrape additional movie info and call output function to display information.  
