@@ -4,7 +4,7 @@ This gem allows you to find out what the top movies are in the box office and ho
 
 ## Installation
 
-**Note:  The below instructions are for when this gem is eventually pushed to https://rubygems.org/.  However, you can still clone the GitHub repo, bundle install, and run it on your own system. 
+**Note:  The below instructions are for when this gem is eventually pushed to https://rubygems.org/.  However, you can still clone the GitHub repo, run bundle install, and then run it on your own system with bin/top-box-office. 
 
 Add this line to your application's Gemfile:
 
